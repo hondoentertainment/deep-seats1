@@ -1,0 +1,270 @@
+# Claude Code Configuration for Deep Seats
+
+## Project Context
+
+This is **Deep Seats**, a single-file React application for tracking sports games across NBA, MLB, and NFL.
+
+### Key Facts
+- **Architecture:** Single HTML file with inline CSS and JavaScript
+- **Framework:** React 18 (loaded from CDN)
+- **File:** index.html (5,700+ lines, 256KB)
+- **Components:** 17 React functional components
+- **Design:** Material 3 design system
+- **Storage:** Browser LocalStorage (no backend)
+
+### File Structure
+```
+Lines 1-40:     HTML head, meta tags, external scripts
+Lines 41-2594:  CSS styles (Material 3 design tokens + component styles)
+Lines 2595-2597: HTML body (loading screen + React root)
+Lines 2598-5700: JavaScript (React components and application logic)
+```
+
+## Development Guidelines
+
+### When Making Changes
+
+1. **Preserve Structure**
+   - Keep single-file architecture
+   - Maintain CDN script tags
+   - Don't break existing components
+
+2. **Follow Patterns**
+   - Use functional components with hooks
+   - Follow Material 3 design tokens
+   - Use existing utility functions
+   - Keep LocalStorage structure
+
+3. **Code Style**
+   - Components: PascalCase
+   - Functions: camelCase  
+   - Constants: UPPER_SNAKE_CASE
+   - CSS: kebab-case with BEM-like naming
+
+4. **Test Locally**
+   - Run: `python3 -m http.server 8000`
+   - Test in browser before confirming changes
+   - Check browser console for errors
+   - Verify LocalStorage functionality
+
+### Common Tasks
+
+**Adding a Component:**
+```javascript
+function NewComponent({ props }) {
+    const [state, setState] = useState(initial);
+    return <div>JSX</div>;
+}
+```
+
+**Adding a Feature:**
+1. Create component function
+2. Add to App component's render
+3. Update navigation if needed
+4. Add to README documentation
+
+**Modifying Styles:**
+- Use existing CSS custom properties (--md-sys-color-*)
+- Follow Material 3 elevation system
+- Maintain responsive breakpoints
+- Keep 8px spacing grid
+
+**Updating Data:**
+- Teams: Lines ~2615-2750
+- Venues: Lines ~2750-2900
+- Players: Lines ~2900-3000
+- Trivia: Lines ~3000-3050
+
+## React Architecture
+
+### State Management
+- Local component state with useState
+- No global state management
+- LocalStorage for persistence
+- Props passed down component tree
+
+### Key Hooks Used
+- useState - Component state
+- useEffect - Side effects, lifecycle
+- useCallback - Memoized callbacks
+- useRef - DOM references (map)
+
+### Data Flow
+```
+User Action
+    ↓
+Event Handler
+    ↓
+State Update (setState)
+    ↓
+Re-render
+    ↓
+LocalStorage Save (if needed)
+```
+
+## Important Sections
+
+### CSS (Lines 41-2594)
+- Design tokens: Lines 41-120
+- Base styles: Lines 121-140
+- Components: Lines 141-2000
+- Responsive: Lines 2000-2594
+
+### JavaScript (Lines 2598-5700)
+- Initialization: Lines 2598-2640
+- Data constants: Lines 2641-3080
+- Utility functions: Lines 3081-3141
+- Components: Lines 3142-5600
+- App render: Lines 5600-5700
+
+### Key Components Locations
+- NavRail: ~Line 3150
+- Dashboard: ~Line 3450
+- TeamTracker: ~Line 4100
+- VenueExplorer: ~Line 4600
+- Calendar: ~Line 3700
+- GameFormModal: ~Line 4900
+
+## Performance Considerations
+
+### Optimization
+- Minimize re-renders with useCallback
+- Use React.memo for expensive components (if needed)
+- Lazy load map tiles
+- Debounce search inputs
+- Cache computed statistics
+
+### Memory
+- Clear unused game data periodically
+- Limit trivia history storage
+- Compress shared community data
+- Monitor LocalStorage size (5MB limit)
+
+## Security Notes
+
+### Safe to Modify
+✅ Component logic
+✅ Styling and design
+✅ Data arrays (teams, venues)
+✅ New features
+✅ UI improvements
+
+### Be Careful With
+⚠️ LocalStorage keys (breaking changes)
+⚠️ External CDN URLs (version conflicts)
+⚠️ Data schemas (backward compatibility)
+⚠️ Critical user data handling
+
+### Never Do
+❌ Remove CDN script tags
+❌ Break LocalStorage structure
+❌ Add tracking/analytics
+❌ Transmit user data externally
+❌ Remove data validation
+
+## Debugging
+
+### Console Commands
+```javascript
+// View all games
+JSON.parse(localStorage.getItem('deepseats-games'))
+
+// View profile
+JSON.parse(localStorage.getItem('deepseats-profile'))
+
+// Clear all data
+localStorage.clear()
+
+// Check React version
+console.log(React.version)
+```
+
+### Common Errors
+- "React is not defined" → CDN didn't load
+- "localStorage is not available" → Incognito mode
+- "Cannot read property of undefined" → Data migration needed
+- Map errors → Internet connection or Leaflet CDN
+
+## Best Practices for Claude Code
+
+1. **Read First**
+   - Understand existing code before changing
+   - Check component dependencies
+   - Review data structures
+
+2. **Incremental Changes**
+   - Make small, testable changes
+   - Test after each modification
+   - Don't refactor everything at once
+
+3. **Preserve Functionality**
+   - Maintain existing features
+   - Don't break user data
+   - Keep UI patterns consistent
+
+4. **Document Changes**
+   - Add comments for complex logic
+   - Update README if needed
+   - Note breaking changes
+
+5. **Test Thoroughly**
+   - Run local server
+   - Test in multiple browsers
+   - Verify data persistence
+   - Check responsive design
+
+## Quick Reference
+
+### File Locations
+```
+Component definitions: Lines 3142-5600
+Data constants: Lines 2641-3080
+CSS styles: Lines 41-2594
+Utility functions: Lines 3081-3141
+```
+
+### Key Variables
+```javascript
+games          // User's logged games
+profile        // User profile data
+triviaProgress // Trivia game state
+picks          // Game predictions
+currentView    // Active navigation view
+```
+
+### Important Functions
+```javascript
+getStorageData()    // Retrieve from localStorage
+setStorageData()    // Save to localStorage
+calculateStats()    // Compute user statistics
+showSnackbar()      // Show toast notification
+```
+
+## Project Goals
+
+### Primary
+- Track sports games across 3 leagues
+- Provide venue exploration with maps
+- Gamify experience with achievements
+- Enable predictions and trivia
+
+### Design
+- Material 3 design language
+- Professional blue color scheme
+- Responsive mobile-first layouts
+- Smooth animations
+
+### Technical
+- Single-file simplicity
+- No build process required
+- Local-first data storage
+- React best practices
+
+---
+
+**This configuration helps Claude Code understand the Deep Seats codebase structure, patterns, and best practices for making intelligent modifications and enhancements.**
+
+**Current Version:** 1.0.0  
+**Status:** Production Ready  
+**Framework:** React 18  
+**Size:** 5,700+ lines
